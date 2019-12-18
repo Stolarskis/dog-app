@@ -1,0 +1,15 @@
+
+type Dog {
+  id: ID! @id
+  name: String!
+  breed: String!
+}
+
+type Owner {
+  id: ID! @id
+  name: String!
+  personalPhone: String!
+  workPhone: String!
+  workId: String!
+  dogs: [Dog!]!
+}

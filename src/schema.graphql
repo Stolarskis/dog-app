@@ -1,0 +1,36 @@
+type Query {
+  info: String!
+  dogs: [Dog!]!
+  dog(id: ID!): Dog! 
+}
+
+type Mutation{
+  uploadDog(name: String!, breed: String!): Dog!
+#  updateDog(id: ID!, name: String!, breed: String!): Dog!
+#  deleteDog(id: ID!): Dog!
+#  signup(username: String!, password: String!, name: String!, personalPhone: String!, workPhone: String!,workId: String!): AuthPayload
+#  login(username: String!, password: String!): AuthPayload
+}
+
+type Dog{
+  id: ID!
+  name: String!
+  breed: String!
+#  VaccRecord: VaccRecord!
+#  Owner: Owner!
+}
+
+
+#type: Owner{
+#  id: ID! @id
+#  name: String!
+#  personalPhone: String!
+#  workPhone: String!
+#  workId: String!
+#}
+
+#type VaccRecord{
+#  vaccRabies: String!
+#  vacc2: String!
+#  vacc3: String!
+#}
