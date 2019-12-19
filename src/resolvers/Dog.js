@@ -1,7 +1,7 @@
-function Owner(parent, args, context) {
-  return context.prisma.Dog({ id: parent.id }).Owner()
+function owner(parent, args, context) {
+  return context.prisma.dog({ id: parent.id }).owner()
 }
 
 module.exports = {
-  postedBy,
+  owner,
 }

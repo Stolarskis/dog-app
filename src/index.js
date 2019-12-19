@@ -3,16 +3,15 @@ const { prisma } = require('./generated/prisma-client')
 
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
-//const User = require('./resolvers/VaccRecord')
-//const User = require('./resolvers/Owner')
-//const Link = require('./resolvers/Dog')
-
+const Owner = require('./resolvers/Owner')
+const Dog = require('./resolvers/Dog')
+//const VaccRecord = require('./resolvers/VaccRecord')
 
 const resolvers = {
   Query,
   Mutation,
-  //Dog,
-  //Owner,
+  Dog,
+  Owner,
   //VaccRecord, 
 }
 

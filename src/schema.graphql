@@ -7,36 +7,37 @@ type Query {
 }
 
 type Mutation{
-  uploadDog(name: String!, breed: String!): Dog!
+  uploadDog(name: String!, breed: String!, ownerId: String!): Dog!
+  uploadOwner(email: String!, name: String!, personalPhone: String!, workPhone: String!,workId: String!): Owner 
 #  updateDog(id: ID!, name: String!, breed: String!): Dog!
 #  deleteDog(id: ID!): Dog!
-   signup(email: String!, password: String!, name: String!, personalPhone: String!, workPhone: String!,workId: String!): AuthPayload
-   login(email: String!, password: String!): AuthPayload
+#  signup(email: String!, password: String!, name: String!, personalPhone: String!, workPhone: String!,workId: String!): AuthPayload
+#  login(email: String!, password: String!): AuthPayload
 }
 
 type Dog{
   id: ID!
   name: String!
   breed: String!
+  owner: Owner!
 #  VaccRecord: VaccRecord!
-#  Owner: Owner!
 }
 
 
 type Owner{
   id: ID!
   email: String! 
-  password: String!
   name: String!
   personalPhone: String!
   workPhone: String!
   workId: String!
+  dogs: [Dog!]!
 }
 
-type AuthPayload{
-  token: String!
-  owner: Owner!
-}
+#type AuthPayload{
+#  token: String!
+#  owner: Owner!
+#}
 
 #type VaccRecord{
 #  vaccRabies: String!
