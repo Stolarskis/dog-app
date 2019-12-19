@@ -1,15 +1,17 @@
 type Query {
   info: String!
   dogs: [Dog!]!
+  owners: [Owner!]!
   dog(id: ID!): Dog! 
+  owner(id: ID!): Owner! 
 }
 
 type Mutation{
   uploadDog(name: String!, breed: String!): Dog!
 #  updateDog(id: ID!, name: String!, breed: String!): Dog!
 #  deleteDog(id: ID!): Dog!
-#  signup(username: String!, password: String!, name: String!, personalPhone: String!, workPhone: String!,workId: String!): AuthPayload
-#  login(username: String!, password: String!): AuthPayload
+   signup(email: String!, password: String!, name: String!, personalPhone: String!, workPhone: String!,workId: String!): AuthPayload
+   login(email: String!, password: String!): AuthPayload
 }
 
 type Dog{
@@ -21,13 +23,20 @@ type Dog{
 }
 
 
-#type: Owner{
-#  id: ID! @id
-#  name: String!
-#  personalPhone: String!
-#  workPhone: String!
-#  workId: String!
-#}
+type Owner{
+  id: ID!
+  email: String! 
+  password: String!
+  name: String!
+  personalPhone: String!
+  workPhone: String!
+  workId: String!
+}
+
+type AuthPayload{
+  token: String!
+  owner: Owner!
+}
 
 #type VaccRecord{
 #  vaccRabies: String!

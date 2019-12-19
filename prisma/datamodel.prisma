@@ -7,9 +7,10 @@ type Dog {
 
 type Owner {
   id: ID! @id
+  email: String! @unique
   name: String!
+  password: String!
   personalPhone: String!
   workPhone: String!
   workId: String!
-  dogs: [Dog!]!
 }
