@@ -1,0 +1,13 @@
+uservices:
+  db:
+    image: postgres
+    restart: always
+    ports: 5342:5342
+    environment:
+      POSTGRES_PASSWORD: example
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
