@@ -1,13 +1,19 @@
-uservices:
+version: "2.0"
+services:
   db:
     image: postgres
-    restart: always
-    ports: 5342:5342
+    ports:
+      - 5342:5342
     environment:
+      POSTGRES_USERNAME: root
       POSTGRES_PASSWORD: example
 
   adminer:
     image: adminer
-    restart: always
     ports:
       - 8080:8080
+
+  dog-app:
+    image: dog-app:0.0.2
+    ports:
+      - 8000:8000
