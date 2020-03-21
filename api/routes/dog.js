@@ -41,6 +41,10 @@ app.post("/", (req, res) => {
   models.Dogs.create({
     name: req.body.name,
     breed: req.body.breed,
+    sex: req.body.sex,
+    fixed: req.body.fixed,
+    weight: req.body.weight,
+    age: req.body.age,
     owner: req.body.owner
   }).then(dog => {
     res.status(201).send({
@@ -79,7 +83,15 @@ app.delete("/:id/vaccRecord", (req, res) => {
 
 app.put("/:id", (req, res) => {
   models.Dogs.update(
-    { name: req.body.name, breed: req.body.breed, owner: req.body.owner },
+    {
+      name: req.body.name,
+      breed: req.body.breed,
+      sex: req.body.sex,
+      fixed: req.body.fixed,
+      weight: req.body.weight,
+      age: req.body.age,
+      owner: req.body.owner
+    },
     { where: { id: req.params.id } }
   ).then(result => {
     if (result === 1) {

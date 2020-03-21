@@ -7,9 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: { type: DataTypes.STRING, allowNull: false },
     breed: { type: DataTypes.STRING, allowNull: false },
-    sex: { type: DataTypes.STRING, allowNull: false },
-    weight: { type: DataTypes.STRING, allowNull: true },
-    age: { type: DataTypes.STRING, allowNull: true },
+    sex: { type: DataTypes.STRING, allowNull: true },
+    fixed: { type: DataTypes.STRING, allowNull: false },
+    weight: { type: DataTypes.INTEGER, allowNull: true },
+    ageYears: { type: DataTypes.INTEGER, allowNull: true },
     owner: { type: DataTypes.STRING, allowNull: false }
   });
 
