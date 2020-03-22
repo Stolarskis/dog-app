@@ -4,9 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1
-  },
   paper: {
     height: 140,
     width: 100
@@ -61,11 +58,4 @@ const Dogs = props => {
   );
 };
 
-function fetchAllDogs(setDogs) {
-  fetch("http://localhost:9000/dog/all", { mode: "cors" })
-    .then(res => res.json())
-    .then(res => {
-      return res.body;
-    });
-}
 export default Dogs;

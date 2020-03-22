@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Dogs from "../components/Dogs";
+import Tabs from "../components/PageTabs.js";
 
 class App extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Tabs tabNumber={0} />
         <Dogs />
       </div>
     );

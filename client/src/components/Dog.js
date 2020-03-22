@@ -24,6 +24,7 @@ const useStyles = makeStyles({
 });
 
 const Dog = ({ dogInfo, deleteDog }) => {
+  console.log(dogInfo);
   const classes = useStyles();
 
   /**
