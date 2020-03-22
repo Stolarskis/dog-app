@@ -26,20 +26,6 @@ const useStyles = makeStyles({
 const Dog = ({ dogInfo, deleteDog }) => {
   const classes = useStyles();
 
-  /**
-  function updateDog() {
-    fetch(`http://localhost:9000/dog/${dogInfo.id}`, {
-      method: "PUT",
-      mode: "cors",
-       headers: {
-      'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-
-    });
-  }
-  */
-
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
