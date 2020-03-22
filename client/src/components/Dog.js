@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275
+    minWidth: 250
   },
   bullet: {
     display: "inline-block",
@@ -16,23 +16,15 @@ const useStyles = makeStyles({
     transform: "scale(0.8)"
   },
   title: {
-    fontSize: 14
+    fontSize: 25
   },
   pos: {
     marginBottom: 12
   }
 });
 
-const Dog = ({ dogInfo }) => {
+const Dog = ({ dogInfo, deleteDog }) => {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-
-  function deleteDog() {
-    fetch(`http://localhost:9000/dog/${dogInfo.id}`, {
-      method: "DELETE",
-      mode: "cors"
-    });
-  }
 
   /**
   function updateDog() {
@@ -47,15 +39,13 @@ const Dog = ({ dogInfo }) => {
     });
   }
   */
+
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        ></Typography>
-        <Typography variant="h5">{dogInfo.name}</Typography>
+        <Typography className={classes.title} align="center">
+          {dogInfo.name}
+        </Typography>
         <Typography className={classes.pos} color="textSecondary">
           {dogInfo.breed}
         </Typography>

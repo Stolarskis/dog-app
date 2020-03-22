@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Dog from "./Dog";
+import Dog from "../components/Dog";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
@@ -22,16 +22,26 @@ const Dogs = props => {
   const spacing = 2;
 
   function deleteDog(id) {
+    //Delete dog from database
     fetch(`http://localhost:9000/dog/${id}`, {
       method: "DELETE",
       mode: "cors"
+    }).then(() => {
+      //then update state
+      fetch("http://localhost:9000/dog/all", { mode: "cors" })
+        .then(res => res.json())
+        .then(res => {
+          setDogs(res.body);
+        });
     });
-
-    fetchAllDogs(setDogs);
   }
 
   useEffect(() => {
-    fetchAllDogs(setDogs);
+    fetch("http://localhost:9000/dog/all", { mode: "cors" })
+      .then(res => res.json())
+      .then(res => {
+        setDogs(res.body);
+      });
   }, []);
 
   return (
@@ -55,7 +65,7 @@ function fetchAllDogs(setDogs) {
   fetch("http://localhost:9000/dog/all", { mode: "cors" })
     .then(res => res.json())
     .then(res => {
-      setDogs(res.body);
+      return res.body;
     });
 }
 export default Dogs;

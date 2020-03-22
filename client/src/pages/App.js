@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import "./App.css";
-import Dogs from "./Dogs.js";
+import Dogs from "../components/Dogs";
 
 class App extends Component {
   constructor(props) {
