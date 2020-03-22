@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import Dogs from "./Dogs.js";
+import Dogs from "../components/Dogs";
+import Tabs from "../components/PageTabs.js";
 
 class App extends Component {
   constructor(props) {
@@ -11,6 +10,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Tabs tabNumber={0} />
         <Dogs />
       </div>
     );
