@@ -9,7 +9,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const DogForm = () => {
+const DogForm = ({ handleSubmit }) => {
   const [dog, setDog] = useState({
     name: "",
     breed: "",
@@ -38,7 +37,6 @@ const DogForm = () => {
     owner: ""
   });
   const classes = useStyles();
-  const history = useHistory();
 
   function handleChange(event) {
     let newDog = Object.assign({}, dog);
@@ -68,21 +66,6 @@ const DogForm = () => {
         setDog(newDog);
         break;
     }
-  }
-
-  function handleSubmit() {
-    //Create Dog in database
-    fetch("http://localhost:9000/dog", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(dog)
-    }).then(() => {
-      history.push("/");
-    });
   }
 
   return (
@@ -155,7 +138,9 @@ const DogForm = () => {
         className={classes.submitButton}
         variant="contained"
         color="primary"
-        onClick={handleSubmit}
+        onClick={() => {
+          handleSubmit(dog);
+        }}
       >
         Submit
       </Button>

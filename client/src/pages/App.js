@@ -10,7 +10,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Tabs tabNumber={0} />
         <Dogs />
       </div>
     );

@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function PageTabs({ tabNumber }) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(tabNumber);
+  const [value, setValue] = React.useState(0);
   const history = useHistory();
 
   const handleChange = (event, newValue) => {

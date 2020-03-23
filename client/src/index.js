@@ -4,10 +4,12 @@ import App from "./pages/App";
 import Contact from "./pages/Contact";
 import AddDog from "./pages/AddDog";
 import EditDog from "./pages/EditDog";
+import PageTabs from "./components/PageTabs";
 import { Route, Link, BrowserRouter as Router } from "react-router-dom";
 
 const routing = (
   <Router>
+    <PageTabs />
     <div>
       <Route exact path="/" component={App} />
       <Route path="/contact" component={Contact} />
