@@ -5,6 +5,8 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -25,13 +27,14 @@ const useStyles = makeStyles({
 
 const Dog = ({ dogInfo, deleteDog }) => {
   const classes = useStyles();
-
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography className={classes.title} align="center">
           {dogInfo.name}
         </Typography>
+        <Divider />
+        <br />
         <Typography className={classes.pos} color="textSecondary">
           {dogInfo.breed}
         </Typography>
