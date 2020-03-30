@@ -1,46 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper
+    flexGrow: 1
   }
 }));
 
-export default function PageTabs({ tabNumber }) {
+const PageTabs = ({ history }) => {
+  const [tabNumber, setTabNumber] = useState(determineInitialRoute);
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-  const history = useHistory();
+  const tabProps = {};
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  function determineInitialRoute() {
+    if (history.location.pathname === "/") {
+      return 0;
+    } else if (history.location.pathname === "/addDog/") {
+      return 1;
+    }
+  }
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="Dog App Tabs">
+        <Tabs value={tabNumber} aria-label="Dog App Tabs">
           <Tab
             label="Home"
             key="HomeTab"
             onClick={() => {
-              history.push("/");
+              setTabNumber(0);
             }}
+            component={NavLink}
+            to={"/"}
           />
           <Tab
             label="Add Dog"
             key="AddDogTab"
             onClick={() => {
-              history.push("/addDog");
+              setTabNumber(1);
             }}
-          ></Tab>
+            component={NavLink}
+            to={"/addDog/"}
+          />
         </Tabs>
       </AppBar>
     </div>
   );
-}
+};
+
+export default withRouter(PageTabs);

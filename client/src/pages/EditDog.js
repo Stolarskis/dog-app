@@ -2,7 +2,7 @@ import React from "react";
 import DogForm from "../components/DogForm";
 import { useHistory } from "react-router-dom";
 
-const EditDog = () => {
+const EditDog = props => {
   const history = useHistory();
 
   const dogId = history.location.pathname.split("/").pop();
@@ -24,7 +24,7 @@ const EditDog = () => {
   return (
     <div>
       <h1>Edit Dog</h1>
-      <DogForm handleSubmit={handleSubmit} />
+      <DogForm handleSubmit={handleSubmit} dogInfo={props.location.state} />
     </div>
   );
 };

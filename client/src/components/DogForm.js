@@ -27,14 +27,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const DogForm = ({ handleSubmit }) => {
+const DogForm = ({ handleSubmit, dogInfo }) => {
+  console.log(dogInfo);
   const [dog, setDog] = useState({
-    name: "",
-    breed: "",
-    sex: "",
-    fixed: false,
-    weight: "",
-    owner: ""
+    name: dogInfo.name,
+    breed: dogInfo.breed,
+    sex: dogInfo.sex,
+    fixed: dogInfo.fixed,
+    weight: dogInfo.weight,
+    owner: dogInfo.owner
   });
   const classes = useStyles();
 
