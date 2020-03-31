@@ -26,7 +26,7 @@ const AddDog = () => {
       <Typography variant="h4" component="h2" gutterBottom>
         Add Dog
       </Typography>
-      <DogForm handleSubmit={handleSubmit} />
+      <DogForm handleSubmit={handleSubmit} dogInfo={{}} />
     </div>
   );
 };

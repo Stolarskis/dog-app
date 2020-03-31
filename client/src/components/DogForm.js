@@ -27,14 +27,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const DogForm = ({ handleSubmit }) => {
+const DogForm = ({ handleSubmit, dogInfo }) => {
   const [dog, setDog] = useState({
-    name: "",
-    breed: "",
-    sex: "",
-    fixed: false,
-    weight: "",
-    owner: ""
+    name: "name" in dogInfo ? dogInfo.name : "",
+    breed: "breed" in dogInfo ? dogInfo.breed : "",
+    sex: "sex" in dogInfo ? dogInfo.sex : "female",
+    fixed: "fixed" in dogInfo ? dogInfo.fixed : false,
+    weight: "weight" in dogInfo ? dogInfo.weight : 0,
+    owner: "owner" in dogInfo ? dogInfo.owner : ""
   });
   const classes = useStyles();
 
@@ -77,6 +77,7 @@ const DogForm = ({ handleSubmit }) => {
             label="Name"
             variant="outlined"
             onChange={handleChange}
+            value={dog.name}
           />
           <FormControl component="fieldset" className={classes.radioButtons}>
             <FormLabel component="legend">Sex</FormLabel>
@@ -101,6 +102,7 @@ const DogForm = ({ handleSubmit }) => {
             label="Breed"
             variant="outlined"
             onChange={handleChange}
+            value={dog.breed}
           />
 
           <FormControlLabel
@@ -122,6 +124,7 @@ const DogForm = ({ handleSubmit }) => {
             label="Weight"
             variant="outlined"
             onChange={handleChange}
+            value={dog.weight}
           />
         </div>
         <div>
@@ -130,6 +133,7 @@ const DogForm = ({ handleSubmit }) => {
             label="Owner Name"
             variant="outlined"
             onChange={handleChange}
+            value={dog.owner}
           />
         </div>
       </form>
