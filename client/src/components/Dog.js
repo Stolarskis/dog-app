@@ -43,14 +43,16 @@ const Dog = ({ dogInfo, deleteDog }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <NavLink
+        <Button
+          variant="contained"
+          component={NavLink}
           to={{
             pathname: `/editDog/${dogInfo.id}`,
             state: dogInfo
           }}
         >
-          <Button variant="contained">EDIT</Button>
-        </NavLink>
+          EDIT
+        </Button>
         <Button variant="contained">GET INFO</Button>
         <Button
           variant="contained"

@@ -15,13 +15,12 @@ const useStyles = makeStyles(theme => ({
 const PageTabs = ({ history }) => {
   const [tabNumber, setTabNumber] = useState(determineInitialRoute);
   const classes = useStyles();
-  const tabProps = {};
 
   function determineInitialRoute() {
-    if (history.location.pathname === "/") {
-      return 0;
-    } else if (history.location.pathname === "/addDog/") {
+    if (history.location.pathname === "/addDog/") {
       return 1;
+    } else {
+      return 0;
     }
   }
 
