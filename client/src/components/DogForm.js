@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -64,6 +63,8 @@ const DogForm = ({ handleSubmit, dogInfo }) => {
       case "owner":
         newDog["owner"] = event.target.value;
         setDog(newDog);
+        break;
+      default:
         break;
     }
   }
