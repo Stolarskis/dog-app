@@ -1,5 +1,4 @@
 import React from "react";
-import PageTabs from "../components/PageTabs";
 import DogForm from "../components/DogForm";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";

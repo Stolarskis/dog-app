@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Dogs from "../components/Dogs";
 
 export default function DogsPage() {
