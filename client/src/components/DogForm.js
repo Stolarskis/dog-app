@@ -9,7 +9,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,17 +27,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const DogForm = () => {
+const DogForm = ({ handleSubmit, dogInfo }) => {
   const [dog, setDog] = useState({
-    name: "",
-    breed: "",
-    sex: "",
-    fixed: false,
-    weight: "",
-    owner: ""
+    name: "name" in dogInfo ? dogInfo.name : "",
+    breed: "breed" in dogInfo ? dogInfo.breed : "",
+    sex: "sex" in dogInfo ? dogInfo.sex : "female",
+    fixed: "fixed" in dogInfo ? dogInfo.fixed : false,
+    weight: "weight" in dogInfo ? dogInfo.weight : 0,
+    owner: "owner" in dogInfo ? dogInfo.owner : ""
   });
   const classes = useStyles();
-  const history = useHistory();
 
   function handleChange(event) {
     let newDog = Object.assign({}, dog);
@@ -70,21 +68,6 @@ const DogForm = () => {
     }
   }
 
-  function handleSubmit() {
-    //Create Dog in database
-    fetch("http://localhost:9000/dog", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(dog)
-    }).then(() => {
-      history.push("/");
-    });
-  }
-
   return (
     <div>
       <form className={classes.root} noValidate autoComplete="off">
@@ -94,6 +77,7 @@ const DogForm = () => {
             label="Name"
             variant="outlined"
             onChange={handleChange}
+            value={dog.name}
           />
           <FormControl component="fieldset" className={classes.radioButtons}>
             <FormLabel component="legend">Sex</FormLabel>
@@ -118,6 +102,7 @@ const DogForm = () => {
             label="Breed"
             variant="outlined"
             onChange={handleChange}
+            value={dog.breed}
           />
 
           <FormControlLabel
@@ -139,6 +124,7 @@ const DogForm = () => {
             label="Weight"
             variant="outlined"
             onChange={handleChange}
+            value={dog.weight}
           />
         </div>
         <div>
@@ -147,6 +133,7 @@ const DogForm = () => {
             label="Owner Name"
             variant="outlined"
             onChange={handleChange}
+            value={dog.owner}
           />
         </div>
       </form>
@@ -155,7 +142,9 @@ const DogForm = () => {
         className={classes.submitButton}
         variant="contained"
         color="primary"
-        onClick={handleSubmit}
+        onClick={() => {
+          handleSubmit(dog);
+        }}
       >
         Submit
       </Button>

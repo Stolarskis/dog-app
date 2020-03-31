@@ -6,7 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import { useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -43,7 +43,16 @@ const Dog = ({ dogInfo, deleteDog }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant="contained">EDIT</Button>
+        <Button
+          variant="contained"
+          component={NavLink}
+          to={{
+            pathname: `/editDog/${dogInfo.id}`,
+            state: dogInfo
+          }}
+        >
+          EDIT
+        </Button>
         <Button variant="contained">GET INFO</Button>
         <Button
           variant="contained"
