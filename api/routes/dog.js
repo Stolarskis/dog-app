@@ -28,13 +28,6 @@ app.get("/:id", (req, res) => {
   });
 });
 
-// get a dog's vaccination record
-app.get("/:id/vaccRecord", (req, res) => {
-  res.status(200).send({
-    message: "Return dog's vaccination record with id " + req.params.id
-  });
-});
-
 //Add Dog
 app.post("/", (req, res) => {
   //Create Dog
@@ -54,13 +47,6 @@ app.post("/", (req, res) => {
   });
 });
 
-app.post("/:id/vaccRecord", (req, res) => {
-  res.status(200).send({
-    message: "Vaccination Record Added for dog " + req.params.id,
-    body: req.body
-  });
-});
-
 app.delete("/:id", (req, res) => {
   models.Dogs.destroy({ where: { id: req.params.id } }).then(result => {
     if (result === 0) {
@@ -72,12 +58,6 @@ app.delete("/:id", (req, res) => {
         message: "Dog deleted successfully"
       });
     }
-  });
-});
-
-app.delete("/:id/vaccRecord", (req, res) => {
-  res.status(200).send({
-    message: "Deleted vaccination record for dog " + req.params.id
   });
 });
 
@@ -102,15 +82,88 @@ app.put("/:id", (req, res) => {
   });
 });
 
-app.put("/:id/vaccRecord", (req, res) => {
+app.get("/:id/vaccRecord", (req, res) => {
+  getVaccRecord(req.params.id).then(vaccRecord => {
+    if (vaccRecord === null) {
+      res.status(404).send({
+        message: "Vaccination record not found",
+        body: {}
+      });
+    } else {
+      res.status(200).send({
+        body: vaccRecord
+      });
+    }
+  });
+});
+
+app.get("/:id/vaccRecord", (req, res) => {
   res.status(200).send({
-    message: "Updated Vaccination record for dog " + req.params.id,
-    body: req.body
+    message: "Return dog's vaccination record with id " + req.params.id
+  });
+});
+
+//this is absolute crap
+app.post("/:id/vaccRecord", (req, res) => {
+  //Check is given id exists for a dog in database
+  getDog(req.params.id).then(dog => {
+    if (dog === null) {
+      res.status(404).send({
+        message: "Unable to post Vaccination Record. Dog does not exist"
+      });
+    } else {
+      //Wait to check if dog exists, if it does, then check if vaccination record exists.
+      getVaccRecord(req.params.id).then(vaccRecord => {
+        if (vaccRecord !== null) {
+          res.status(404).send({
+            message: "Unable to post Vaccination Record. Record already exists"
+          });
+          return;
+        } else {
+          //Wait to check if vaccination record exists, if it doesn't then post vaccination record.
+          models.VaccRecord.create({
+            DogId: req.params.id,
+            rabiesDueDate: req.body.rabiesDueDate,
+            heartwormDueDate: req.body.heartwormDueDate,
+            fleaTickDueDate: req.body.fleaTickDueDate
+          }).then(result => {
+            res.status(200).send({
+              message: "Vaccination Record Added for dog " + req.params.id,
+              body: result
+            });
+          });
+        }
+      });
+    }
+  });
+});
+
+app.put("/:id/vaccRecord", (req, res) => {
+  models.VaccRecord.update({
+    DogId: req.params.id,
+    rabiesDueDate: req.body.rabiesDueDate,
+    heartwormDueDate: req.body.heartwormDueDate,
+    fleaTickDueDate: req.body.fleaTickDueDate
+  }).then(result => {
+    res.status(200).send({
+      message: "Updated Vaccination record for dog " + req.params.id,
+      body: result
+    });
+  });
+});
+
+app.delete("/:id/vaccRecord", (req, res) => {
+  res.status(200).send({
+    message: "Deleted vaccination record for dog " + req.params.id
   });
 });
 
 function getDog(id) {
   return models.Dogs.findOne({ where: { id: id } });
+}
+
+function getVaccRecord(id) {
+  return models.VaccRecord.findOne({ where: { DogId: id } });
 }
 
 module.exports = app;

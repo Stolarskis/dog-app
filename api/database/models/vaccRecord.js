@@ -5,17 +5,14 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    name: { type: DataTypes.STRING, allowNull: false },
-    rabies: { type: DataTypes.STRING, allowNull: false },
-    heartworm: { type: DataTypes.STRING, allowNull: false },
-    fleaTick: { type: DataTypes.STRING, allowNull: false }
+    rabiesDueDate: { type: DataTypes.STRING, allowNull: false },
+    heartwormDueDate: { type: DataTypes.STRING, allowNull: false },
+    fleaTickDueDate: { type: DataTypes.STRING, allowNull: false }
   });
 
-  /**
-  Dogs.associate = function(models) {
-    models.Dogs.hasMany(models.Task);
+  VaccRecord.associate = function(models) {
+    models.VaccRecord.belongsTo(models.Dogs);
   };
-  */
 
   (async () => {
     await sequelize.sync();
