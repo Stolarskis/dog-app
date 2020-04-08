@@ -2,10 +2,11 @@ import React from "react";
 import DogForm from "../components/DogForm";
 import { useHistory } from "react-router-dom";
 
-const EditDog = props => {
+const EditDog = (props) => {
   const history = useHistory();
 
   const dogId = history.location.pathname.split("/").pop();
+
   function handleSubmit(dog) {
     //Create Dog in database
     fetch(`http://localhost:9000/dog/${dogId}`, {
@@ -13,9 +14,9 @@ const EditDog = props => {
       mode: "cors",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(dog)
+      body: JSON.stringify(dog),
     }).then(() => {
       history.push("/");
     });

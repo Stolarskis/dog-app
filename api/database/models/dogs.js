@@ -1,3 +1,5 @@
+//All of this needs to be async
+
 module.exports = (sequelize, DataTypes) => {
   var Dogs = sequelize.define("Dogs", {
     id: {

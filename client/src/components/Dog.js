@@ -49,18 +49,21 @@ const Dog = ({ dogInfo, deleteDog }) => {
           to={{
             pathname: `/editDog/${dogInfo.id}`,
             state: dogInfo
-          }}
-        >
+          }}>
           EDIT
         </Button>
-        <Button variant="contained">GET INFO</Button>
+        <Button variant="contained" component={NavLink} to={{
+          pathname: `/infoDog/${dogInfo.id}`,
+          state: dogInfo
+        }}>
+        GET INFO
+        </Button>
         <Button
           variant="contained"
           color="secondary"
           onClick={() => {
             deleteDog(dogInfo.id);
-          }}
-        >
+          }}>
           DELETE
         </Button>
       </CardActions>

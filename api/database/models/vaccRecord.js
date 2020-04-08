@@ -1,3 +1,5 @@
+//All of this needs to be async
+
 module.exports = (sequelize, DataTypes) => {
   var VaccRecord = sequelize.define("VaccRecord", {
     id: {
