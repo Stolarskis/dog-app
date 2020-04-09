@@ -16,35 +16,12 @@ const useStyles = makeStyles({
 });
 
 const DogInfo = ({ dogInfo }) => {
-  console.log(dogInfo);
   const classes = useStyles();
 
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>{"Dog"}</TableCell>
-            <TableCell align="left">Info</TableCell>
-          </TableRow>
-        </TableHead>
         <TableBody>
-          <TableRow key={"Name"}>
-            <TableCell align="left">{"Name"}</TableCell>
-            <TableCell align="left">{dogInfo.name}</TableCell>
-          </TableRow>
-          <TableRow key={"Breed"}>
-            <TableCell align="left">{"Breed"}</TableCell>
-            <TableCell align="left">{dogInfo.breed}</TableCell>
-          </TableRow>
-          <TableRow key={"Sex"}>
-            <TableCell align="left">{"Sex"}</TableCell>
-            <TableCell align="left">{dogInfo.sex}</TableCell>
-          </TableRow>
-          <TableRow key={"Owner"}>
-            <TableCell align="left">{"Owner"}</TableCell>
-            <TableCell align="left">{dogInfo.owner}</TableCell>
-          </TableRow>
           <TableRow key={"Fixed"}>
             <TableCell align="left">{"Fixed"}</TableCell>
             <TableCell align="left">{dogInfo.fixed ? "Yes" : "No"}</TableCell>

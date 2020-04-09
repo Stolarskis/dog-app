@@ -3,17 +3,17 @@ import Dog from "../components/Dog";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     height: 140,
-    width: 100
+    width: 100,
   },
   control: {
-    padding: theme.spacing(2)
-  }
+    padding: theme.spacing(2),
+  },
 }));
 
-const Dogs = props => {
+const Dogs = (props) => {
   const [dogs, setDogs] = useState([]);
   const classes = useStyles();
   const spacing = 2;
@@ -22,23 +22,54 @@ const Dogs = props => {
     //Delete dog from database
     fetch(`http://localhost:9000/dog/${id}`, {
       method: "DELETE",
-      mode: "cors"
+      mode: "cors",
     }).then(() => {
       //then update state
       fetch("http://localhost:9000/dog/all", { mode: "cors" })
-        .then(res => res.json())
-        .then(res => {
+        .then((res) => res.json())
+        .then((res) => {
           setDogs(res.body);
         });
     });
   }
 
   useEffect(() => {
-    fetch("http://localhost:9000/dog/all", { mode: "cors" })
-      .then(res => res.json())
-      .then(res => {
-        setDogs(res.body);
+    async function getDogs() {
+      const dogsResult = await fetch("http://localhost:9000/dog/all", {
+        mode: "cors",
       });
+
+      let dogs = await dogsResult.json();
+      dogs = dogs.body;
+
+      dogs = await Promise.all(
+        dogs.map(async (dog) => {
+          const result = await addVaccRecord(dog);
+          return result;
+        })
+      );
+
+      setDogs(dogs);
+    }
+
+    async function addVaccRecord(dogInfo) {
+      const result = await fetch(
+        `http://localhost:9000/dog/${dogInfo.id}/vaccRecord`,
+        {
+          method: "GET",
+          mode: "cors",
+          cache: "no-cache",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const vaccRecord = await result.json();
+      return await { ...dogInfo, ...vaccRecord.body };
+    }
+
+    getDogs();
   }, []);
 
   return (
@@ -46,7 +77,7 @@ const Dogs = props => {
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={spacing}>
-            {dogs.map(dog => (
+            {dogs.map((dog) => (
               <Grid key={dog.id} item>
                 <Dog key={dog.id} dogInfo={dog} deleteDog={deleteDog} />
               </Grid>
