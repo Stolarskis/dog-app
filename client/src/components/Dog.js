@@ -15,9 +15,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DogNotFound from "../../public/dognotfound.png";
 import Divider from "@material-ui/core/Divider";
 import DogTable from "./DogTable";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import { NavLink } from "react-router-dom";
+import DogMenu from "./DogMenu";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,11 +46,12 @@ const Dog = ({ dogInfo, deleteDog }) => {
   const [expanded, setExpanded] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
+  const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleMenuClose = () => {
+    console.log(anchorEl);
     setAnchorEl(null);
   };
   const handleExpandClick = () => {
@@ -62,11 +61,7 @@ const Dog = ({ dogInfo, deleteDog }) => {
   return (
     <Card className={classes.root}>
       <CardHeader
-        action={
-          <IconButton aria-label="settings" onClick={handleClick}>
-            <MoreVertIcon />
-          </IconButton>
-        }
+        action={<DogMenu dogInfo={dogInfo} deleteDog={deleteDog} />}
         title={dogInfo.name}
         subheader={dogInfo.owner}
       />
@@ -75,30 +70,6 @@ const Dog = ({ dogInfo, deleteDog }) => {
         image={DogNotFound}
         title="Dog Picture"
       />
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem
-          component={NavLink}
-          to={{
-            pathname: `/editDog/${dogInfo.id}`,
-            state: dogInfo,
-          }}
-        >
-          Edit Dog
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            deleteDog(dogInfo.id);
-          }}
-        >
-          Delete Dog
-        </MenuItem>
-      </Menu>
       <CardContent>
         <Typography variant="body1" color="textPrimary" component="p">
           {dogInfo.breed}
@@ -128,51 +99,6 @@ const Dog = ({ dogInfo, deleteDog }) => {
       </Collapse>
     </Card>
   );
-
-  /**
-  return (
-    <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Typography className={classes.title} align="center">
-          {dogInfo.name}
-        </Typography>
-        <Divider />
-        <br />
-        <Typography className={classes.pos} color="textSecondary">
-          {dogInfo.breed}
-        </Typography>
-        <Typography variant="body2" component="p">
-          {dogInfo.owner}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button
-          variant="contained"
-          component={NavLink}
-          to={{
-            pathname: `/editDog/${dogInfo.id}`,
-            state: dogInfo
-          }}>
-          EDIT
-        </Button>
-        <Button variant="contained" component={NavLink} to={{
-          pathname: `/infoDog/${dogInfo.id}`,
-          state: dogInfo
-        }}>
-        GET INFO
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            deleteDog(dogInfo.id);
-          }}>
-          DELETE
-        </Button>
-      </CardActions>
-    </Card>
-  );
-  */
 };
 
 export default Dog;
