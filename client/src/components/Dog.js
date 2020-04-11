@@ -7,16 +7,17 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
-import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DogNotFound from "../../public/dognotfound.png";
 import Divider from "@material-ui/core/Divider";
 import DogTable from "./DogTable";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +46,15 @@ const Dog = ({ dogInfo, deleteDog }) => {
   const classes = useStyles();
 
   const [expanded, setExpanded] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -54,7 +63,7 @@ const Dog = ({ dogInfo, deleteDog }) => {
     <Card className={classes.root}>
       <CardHeader
         action={
-          <IconButton aria-label="settings">
+          <IconButton aria-label="settings" onClick={handleClick}>
             <MoreVertIcon />
           </IconButton>
         }
@@ -66,12 +75,36 @@ const Dog = ({ dogInfo, deleteDog }) => {
         image={DogNotFound}
         title="Dog Picture"
       />
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+      >
+        <MenuItem
+          component={NavLink}
+          to={{
+            pathname: `/editDog/${dogInfo.id}`,
+            state: dogInfo,
+          }}
+        >
+          Edit Dog
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            deleteDog(dogInfo.id);
+          }}
+        >
+          Delete Dog
+        </MenuItem>
+      </Menu>
       <CardContent>
-        <Typography variant="body2" color="textPrimary" component="p">
+        <Typography variant="body1" color="textPrimary" component="p">
           {dogInfo.breed}
         </Typography>
         <Divider />
-        <Typography variant="body2" color="textPrimary" component="p">
+        <Typography variant="body1" color="textPrimary" component="p">
           {dogInfo.sex}
         </Typography>
         <Divider />
