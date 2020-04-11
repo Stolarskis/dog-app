@@ -1,3 +1,5 @@
+//All of this needs to be async
+
 module.exports = (sequelize, DataTypes) => {
   var Dogs = sequelize.define("Dogs", {
     id: {
@@ -14,11 +16,9 @@ module.exports = (sequelize, DataTypes) => {
     owner: { type: DataTypes.STRING, allowNull: false }
   });
 
-  /**
   Dogs.associate = function(models) {
-    models.Dogs.hasMany(models.Task);
+    models.Dogs.hasOne(models.VaccRecord, { onDelete: "CASCADE" });
   };
-  */
 
   (async () => {
     await sequelize.sync();
