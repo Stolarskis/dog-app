@@ -44,16 +44,7 @@ const Dog = ({ dogInfo, deleteDog }) => {
   const classes = useStyles();
 
   const [expanded, setExpanded] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleMenuClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    console.log(anchorEl);
-    setAnchorEl(null);
-  };
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
