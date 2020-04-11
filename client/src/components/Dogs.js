@@ -40,33 +40,7 @@ const Dogs = (props) => {
       });
 
       let dogs = await dogsResult.json();
-      dogs = dogs.body;
-
-      dogs = await Promise.all(
-        dogs.map(async (dog) => {
-          const result = await addVaccRecord(dog);
-          return result;
-        })
-      );
-
-      setDogs(dogs);
-    }
-
-    async function addVaccRecord(dogInfo) {
-      const result = await fetch(
-        `http://localhost:9000/dog/${dogInfo.id}/vaccRecord`,
-        {
-          method: "GET",
-          mode: "cors",
-          cache: "no-cache",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const vaccRecord = await result.json();
-      return await { ...dogInfo, ...vaccRecord.body };
+      setDogs(dogs.body);
     }
 
     getDogs();

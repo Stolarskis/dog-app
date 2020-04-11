@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Dog = ({ dogInfo, deleteDog }) => {
+  const [dogState, setDogState] = useState(dogInfo);
   const classes = useStyles();
 
   const [expanded, setExpanded] = React.useState(false);
@@ -48,12 +49,24 @@ const Dog = ({ dogInfo, deleteDog }) => {
     setExpanded(!expanded);
   };
 
+  async function getVaccinationRecord() {
+    const result = await fetch(
+      `http://localhost:9000/dog/${dogState.id}/vaccRecord`,
+      {
+        mode: "cors",
+      }
+    );
+    const vaccRecord = await result.json();
+    const newDogState = await { ...dogState, ...vaccRecord.body };
+    setDogState(newDogState);
+  }
+
   return (
     <Card className={classes.root}>
       <CardHeader
         action={<DogMenu dogInfo={dogInfo} deleteDog={deleteDog} />}
-        title={dogInfo.name}
-        subheader={dogInfo.owner}
+        title={dogState.name}
+        subheader={dogState.owner}
       />
       <CardMedia
         className={classes.media}
@@ -62,11 +75,11 @@ const Dog = ({ dogInfo, deleteDog }) => {
       />
       <CardContent>
         <Typography variant="body1" color="textPrimary" component="p">
-          {dogInfo.breed}
+          {dogState.breed}
         </Typography>
         <Divider />
         <Typography variant="body1" color="textPrimary" component="p">
-          {dogInfo.sex}
+          {dogState.sex}
         </Typography>
         <Divider />
       </CardContent>
@@ -75,7 +88,10 @@ const Dog = ({ dogInfo, deleteDog }) => {
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={handleExpandClick}
+          onClick={async () => {
+            await getVaccinationRecord();
+            handleExpandClick();
+          }}
           aria-expanded={expanded}
           aria-label="show more"
         >
@@ -84,7 +100,7 @@ const Dog = ({ dogInfo, deleteDog }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <DogTable dogInfo={dogInfo} />
+          <DogTable dogInfo={dogState} />
         </CardContent>
       </Collapse>
     </Card>
