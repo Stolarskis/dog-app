@@ -53,6 +53,7 @@ const Dog = ({ dogInfo, deleteDog }) => {
   }
 
   async function getVaccinationRecord() {
+    console.log("this is called");
     const result = await fetch(
       `http://localhost:9000/dog/${dog.id}/vaccRecord`,
       {
@@ -90,10 +91,7 @@ const Dog = ({ dogInfo, deleteDog }) => {
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={async () => {
-            await getVaccinationRecord();
-            handleExpandClick();
-          }}
+          onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
         >
