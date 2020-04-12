@@ -53,7 +53,6 @@ const Dog = ({ dogInfo, deleteDog }) => {
   }
 
   async function getVaccinationRecord() {
-    console.log("this is called");
     const result = await fetch(
       `http://localhost:9000/dog/${dog.id}/vaccRecord`,
       {
