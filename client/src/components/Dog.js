@@ -40,33 +40,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const Dog = ({ dogInfo, deleteDog }) => {
-  const [dogState, setDogState] = useState(dogInfo);
   const classes = useStyles();
 
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [dog, setDog] = useState(dogInfo);
 
-  const handleExpandClick = () => {
+  async function handleExpandClick() {
+    if (!expanded) {
+      await getVaccinationRecord();
+    }
     setExpanded(!expanded);
-  };
+  }
 
   async function getVaccinationRecord() {
     const result = await fetch(
-      `http://localhost:9000/dog/${dogState.id}/vaccRecord`,
+      `http://localhost:9000/dog/${dog.id}/vaccRecord`,
       {
         mode: "cors",
       }
     );
     const vaccRecord = await result.json();
-    const newDogState = await { ...dogState, ...vaccRecord.body };
-    setDogState(newDogState);
+    setDog(await { ...dog, ...vaccRecord.body });
   }
 
   return (
     <Card className={classes.root}>
       <CardHeader
-        action={<DogMenu dogInfo={dogInfo} deleteDog={deleteDog} />}
-        title={dogState.name}
-        subheader={dogState.owner}
+        action={<DogMenu dogInfo={dog} deleteDog={deleteDog} />}
+        title={dog.name}
+        subheader={dog.owner}
       />
       <CardMedia
         className={classes.media}
@@ -75,11 +77,11 @@ const Dog = ({ dogInfo, deleteDog }) => {
       />
       <CardContent>
         <Typography variant="body1" color="textPrimary" component="p">
-          {dogState.breed}
+          {dog.breed}
         </Typography>
         <Divider />
         <Typography variant="body1" color="textPrimary" component="p">
-          {dogState.sex}
+          {dog.sex}
         </Typography>
         <Divider />
       </CardContent>
@@ -100,7 +102,7 @@ const Dog = ({ dogInfo, deleteDog }) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <DogTable dogInfo={dogState} />
+          <DogTable dogInfo={dog} />
         </CardContent>
       </Collapse>
     </Card>
