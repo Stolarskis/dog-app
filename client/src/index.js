@@ -5,11 +5,13 @@ import Contact from "./pages/Contact";
 import AddDog from "./pages/AddDog";
 import EditDog from "./pages/EditDog";
 import PageTabs from "./components/PageTabs";
+import AddDogButton from "./components/AddDogButton";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 
 const routing = (
   <Router>
     <PageTabs />
+    <AddDogButton />
     <div>
       <Route exact path="/" component={DogsPage} />
       <Route path="/contact" component={Contact} />

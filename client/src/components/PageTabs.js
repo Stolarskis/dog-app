@@ -6,10 +6,10 @@ import Tab from "@material-ui/core/Tab";
 import { NavLink } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
 const PageTabs = ({ history }) => {
@@ -36,15 +36,6 @@ const PageTabs = ({ history }) => {
             }}
             component={NavLink}
             to={"/"}
-          />
-          <Tab
-            label="Add Dog"
-            key="AddDogTab"
-            onClick={() => {
-              setTabNumber(1);
-            }}
-            component={NavLink}
-            to={"/addDog/"}
           />
         </Tabs>
       </AppBar>
