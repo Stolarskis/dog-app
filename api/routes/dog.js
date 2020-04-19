@@ -127,9 +127,9 @@ app.post("/:id/vaccRecord", async (req, res) => {
   }
   await models.VaccRecord.create({
     DogId: req.params.id,
-    dhppDappDueDate: req.body.dhppDappDueDate,
-    rabiesDueDate: req.body.rabiesDueDate,
-    bordetellaDueDate: req.body.bordetellaDueDate,
+    dhppDappDueDate: req.body.dhppDappDueDate || "",
+    rabiesDueDate: req.body.rabiesDueDate || "",
+    bordetellaDueDate: req.body.bordetellaDueDate || "",
   });
 
   res.status(200).send({
