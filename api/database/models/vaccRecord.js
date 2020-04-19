@@ -5,19 +5,19 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
-    rabiesDueDate: { type: DataTypes.STRING, allowNull: false },
-    heartwormDueDate: { type: DataTypes.STRING, allowNull: false },
-    fleaTickDueDate: { type: DataTypes.STRING, allowNull: false }
+    dhppDappDueDate: { type: DataTypes.STRING, allowNull: true },
+    rabiesDueDate: { type: DataTypes.STRING, allowNull: true },
+    bordetellaDueDate: { type: DataTypes.STRING, allowNull: true },
   });
 
-  VaccRecord.associate = function(models) {
+  VaccRecord.associate = function (models) {
     models.VaccRecord.belongsTo(models.Dogs);
   };
 
   (async () => {
-    await sequelize.sync();
+    sequelize.sync();
   })();
   return VaccRecord;
 };

@@ -109,7 +109,6 @@ app.get("/:id/vaccRecord", async (req, res) => {
   }
 });
 
-//this is absolute crap
 app.post("/:id/vaccRecord", async (req, res) => {
   //Check is given id exists for a dog in database
   const dog = await getDog(req.params.id);
@@ -128,9 +127,9 @@ app.post("/:id/vaccRecord", async (req, res) => {
   }
   await models.VaccRecord.create({
     DogId: req.params.id,
+    dhppDappDueDate: req.body.dhppDappDueDate,
     rabiesDueDate: req.body.rabiesDueDate,
-    heartwormDueDate: req.body.heartwormDueDate,
-    fleaTickDueDate: req.body.fleaTickDueDate,
+    bordetellaDueDate: req.body.bordetellaDueDate,
   });
 
   res.status(200).send({
@@ -156,9 +155,9 @@ app.put("/:id/vaccRecord", async (req, res) => {
   const vaccRecordUpdate = await models.VaccRecord.update(
     {
       DogId: req.params.id,
+      dhppDappDueDate: req.body.dhppDappDueDate,
       rabiesDueDate: req.body.rabiesDueDate,
-      heartwormDueDate: req.body.heartwormDueDate,
-      fleaTickDueDate: req.body.fleaTickDueDate,
+      bordetellaDueDate: req.body.bordetellaDueDate,
     },
     { where: { DogId: req.params.id } }
   );

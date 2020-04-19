@@ -28,23 +28,27 @@ const DogInfo = ({ dogInfo }) => {
           </TableRow>
           <TableRow key={"Weight"}>
             <TableCell align="left">{"Weight"}</TableCell>
-            <TableCell align="left">{dogInfo.weight}</TableCell>
+            <TableCell align="left">{dogInfo.weight || "N/A"}</TableCell>
           </TableRow>
           <TableRow key={"Age"}>
             <TableCell align="left">{"Age"}</TableCell>
-            <TableCell align="left">{dogInfo.ageYears}</TableCell>
+            <TableCell align="left">{dogInfo.ageYears || "N/A"}</TableCell>
           </TableRow>
           <TableRow key={"Rabies Due Date"}>
-            <TableCell align="left">{"Rabies Due Date"}</TableCell>
-            <TableCell align="left">{dogInfo.rabiesDueDate}</TableCell>
+            <TableCell align="left">{"DHPP/DAPP Due Date"}</TableCell>
+            <TableCell align="left">
+              {dogInfo.dhppDappDueDate || "N/A"}
+            </TableCell>
           </TableRow>
           <TableRow key={"Heartworm Due Date"}>
-            <TableCell align="left">{"Heartworm Due Date"}</TableCell>
-            <TableCell align="left">{dogInfo.heartwormDueDate}</TableCell>
+            <TableCell align="left">{"Rabies Due Date"}</TableCell>
+            <TableCell align="left">{dogInfo.rabiesDueDate || "N/A"}</TableCell>
           </TableRow>
           <TableRow key={"Flea/Tick Due Date"}>
-            <TableCell align="left">{"Flea/Tick Due Date"}</TableCell>
-            <TableCell align="left">{dogInfo.fleaTickDueDate}</TableCell>
+            <TableCell align="left">{"Bordetella Due Date"}</TableCell>
+            <TableCell align="left">
+              {dogInfo.bordetellaDueDate || "N/A"}
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>
