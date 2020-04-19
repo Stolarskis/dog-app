@@ -16,7 +16,6 @@ const useStyles = makeStyles({
 });
 
 const DogInfo = ({ dogInfo }) => {
-  console.log(dogInfo);
   const classes = useStyles();
 
   return (
