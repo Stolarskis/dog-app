@@ -59,9 +59,8 @@ const Dog = ({ dogInfo, deleteDog }) => {
         mode: "cors",
       }
     );
-    let vaccRecord = await result.json();
-
-    setDog(await { ...vaccRecord.body, ...dog });
+    const vaccRecord = await result.json();
+    setDog({ ...vaccRecord.body, ...dog });
   }
 
   return (
