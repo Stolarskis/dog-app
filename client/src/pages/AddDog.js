@@ -19,7 +19,6 @@ const AddDog = () => {
     });
 
     const newDog = await result.json();
-    console.log(newDog);
 
     //Create blank vaccination record for the created dog.
     const resultVaccRecord = await fetch(
@@ -34,7 +33,6 @@ const AddDog = () => {
         body: JSON.stringify({}),
       }
     );
-    console.log(await resultVaccRecord.json());
 
     //Route back to home page
     history.push("/");
