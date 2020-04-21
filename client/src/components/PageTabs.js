@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PageTabs = ({ history }) => {
-  const [tabNumber, setTabNumber] = useState(determineInitialRoute);
+  const [tabNumber, setTabNumber] = useState(0);
   const classes = useStyles();
 
   function determineInitialRoute() {

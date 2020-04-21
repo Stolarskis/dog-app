@@ -60,7 +60,7 @@ const Dog = ({ dogInfo, deleteDog }) => {
       }
     );
     const vaccRecord = await result.json();
-    setDog(await { ...dog, ...vaccRecord.body });
+    setDog({ ...vaccRecord.body, ...dog });
   }
 
   return (

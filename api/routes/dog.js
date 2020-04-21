@@ -5,7 +5,6 @@ let app = express.Router();
 
 // Get all dogs
 app.get("/all", async (req, res) => {
-  console.log("Getting all dogs");
   const dogs = await models.Dogs.findAll();
   res.status(200).send({
     body: dogs,
@@ -58,7 +57,6 @@ app.delete("/:id", async (req, res) => {
 
 app.put("/:id", async (req, res) => {
   const dog = await getDog(req.params.id);
-  console.log("DOGGGGG", dog);
   if (dog === null) {
     res.status(404).send({ message: "Dog does not exist" });
     return;
@@ -75,7 +73,6 @@ app.put("/:id", async (req, res) => {
     },
     { where: { id: req.params.id } }
   );
-  console.log(result);
   if (result === 1) {
     res.status(503).send({ message: "Failed to update dog" });
   } else {
@@ -127,9 +124,9 @@ app.post("/:id/vaccRecord", async (req, res) => {
   }
   await models.VaccRecord.create({
     DogId: req.params.id,
-    dhppDappDueDate: req.body.dhppDappDueDate,
-    rabiesDueDate: req.body.rabiesDueDate,
-    bordetellaDueDate: req.body.bordetellaDueDate,
+    dhppDappDueDate: req.body.dhppDappDueDate || null,
+    rabiesDueDate: req.body.rabiesDueDate || null,
+    bordetellaDueDate: req.body.bordetellaDueDate || null,
   });
 
   res.status(200).send({
@@ -155,14 +152,12 @@ app.put("/:id/vaccRecord", async (req, res) => {
   const vaccRecordUpdate = await models.VaccRecord.update(
     {
       DogId: req.params.id,
-      dhppDappDueDate: req.body.dhppDappDueDate,
-      rabiesDueDate: req.body.rabiesDueDate,
-      bordetellaDueDate: req.body.bordetellaDueDate,
+      dhppDappDueDate: req.body.dhppDappDueDate || null,
+      rabiesDueDate: req.body.rabiesDueDate || null,
+      bordetellaDueDate: req.body.bordetellaDueDate || null,
     },
     { where: { DogId: req.params.id } }
   );
-
-  console.log(vaccRecordUpdate);
 
   res.status(200).send({
     message: "Updated Vaccination Record for dog " + req.params.id,

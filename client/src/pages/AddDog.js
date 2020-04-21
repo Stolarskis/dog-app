@@ -6,19 +6,38 @@ import { useHistory } from "react-router-dom";
 const AddDog = () => {
   const history = useHistory();
 
-  function handleSubmit(dog) {
+  async function handleSubmit(dog) {
     //Create Dog in database
-    fetch("http://localhost:9000/dog", {
+    const result = await fetch("http://localhost:9000/dog", {
       method: "POST",
       mode: "cors",
       cache: "no-cache",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(dog)
-    }).then(() => {
-      history.push("/");
+      body: JSON.stringify(dog),
     });
+
+    const newDog = await result.json();
+
+    //Create blank vaccination record for the created dog.
+    const resultVaccRecord = await fetch(
+      `http://localhost:9000/dog/${newDog.body.id}/vaccRecord`,
+      {
+        method: "POST",
+        mode: "cors",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      }
+    );
+
+    //Route back to home page
+    history.push("/");
+
+    //Create blank vaccination record for the created dog.
   }
   return (
     <div>
