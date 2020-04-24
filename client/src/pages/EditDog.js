@@ -8,7 +8,6 @@ const EditDog = (props) => {
   const dogId = history.location.pathname.split("/").pop();
 
   function handleSubmit(dog) {
-    //Create Dog in database
     fetch(`http://localhost:9000/dog/${dogId}`, {
       method: "PUT",
       mode: "cors",
