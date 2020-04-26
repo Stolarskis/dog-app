@@ -6,7 +6,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import IconButton from "@material-ui/core/IconButton";
 
 //Renders a menu on top of each dog card to allow the user to edit/delete dogs.
-const DogMenu = ({ dogInfo, deleteDog }) => {
+const DogMenu = ({ dogInfo, deleteDog, getVaccDueDates }) => {
   const [position, setPosition] = React.useState(null);
 
   const handleMenuClick = (event) => {
@@ -29,6 +29,7 @@ const DogMenu = ({ dogInfo, deleteDog }) => {
         keepMounted
         open={Boolean(position)}
         onClose={handleMenuClose}
+        onClick={getVaccDueDates}
       >
         <MenuItem
           component={NavLink}
@@ -50,6 +51,7 @@ const DogMenu = ({ dogInfo, deleteDog }) => {
           component={NavLink}
           to={{
             pathname: `/setDueDates/${dogInfo.id}`,
+            state: dogInfo,
           }}
         >
           Vaccination Due Dates

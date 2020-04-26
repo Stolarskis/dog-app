@@ -1,22 +1,15 @@
 import "date-fns";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import VaccDateDialog from "./VaccDateDialog";
 import Button from "@material-ui/core/Button";
 
-export default function VaccForm({ dogInfo, handleSubmit }) {
-  console.log(dogInfo);
-  const [dhppDappDueDate, setDhppDappDueDate] = React.useState(
-    dogInfo["dhppDappDueDate"] || null
-  );
+export default function VaccForm({ handleSubmit, dogId }) {
+  const [dhppDappDueDate, setDhppDappDueDate] = React.useState(null);
 
-  const [rabiesDueDate, setRabiesDueDate] = React.useState(
-    dogInfo["rabiesDueDate"] || null
-  );
+  const [rabiesDueDate, setRabiesDueDate] = React.useState(null);
 
-  const [bordetellaDueDate, setBordetellaDueDate] = React.useState(
-    dogInfo["bordetellaDueDate"] || null
-  );
+  const [bordetellaDueDate, setBordetellaDueDate] = React.useState(null);
 
   const handleDhppDappDateChange = (date) => {
     setDhppDappDueDate(date);
@@ -27,6 +20,28 @@ export default function VaccForm({ dogInfo, handleSubmit }) {
   const handleBordetellaDateChange = (date) => {
     setBordetellaDueDate(date);
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await fetch(
+        `http://localhost:9000/dog/${dogId}/vaccRecord`,
+        {
+          mode: "cors",
+        }
+      );
+
+      const vaccRecord = await result.json();
+      //Api doesn't return a body when returns 404.
+      if (!vaccRecord.body) {
+        return;
+      } else {
+        setDhppDappDueDate(vaccRecord.body["dhppDappDueDate"] || null);
+        setRabiesDueDate(vaccRecord.body["rabiesDueDate"] || null);
+        setBordetellaDueDate(vaccRecord.body["bordetellaDueDate"] || null);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <div>
