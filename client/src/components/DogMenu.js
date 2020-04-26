@@ -46,6 +46,14 @@ const DogMenu = ({ dogInfo, deleteDog }) => {
         >
           Delete Dog
         </MenuItem>
+        <MenuItem
+          component={NavLink}
+          to={{
+            pathname: `/setDueDates/${dogInfo.id}`,
+          }}
+        >
+          Vaccination Due Dates
+        </MenuItem>
       </Menu>
     </div>
   );

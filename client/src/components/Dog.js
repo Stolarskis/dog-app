@@ -47,12 +47,12 @@ const Dog = ({ dogInfo, deleteDog }) => {
 
   async function handleExpandClick() {
     if (!expanded) {
-      await getVaccinationRecord();
+      await setVaccDueDates();
     }
     setExpanded(!expanded);
   }
 
-  async function getVaccinationRecord() {
+  async function setVaccDueDates() {
     const result = await fetch(
       `http://localhost:9000/dog/${dog.id}/vaccRecord`,
       {

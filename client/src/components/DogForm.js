@@ -10,21 +10,21 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
-      width: "25ch"
-    }
+      width: "25ch",
+    },
   },
 
   radioButtons: {
-    marginLeft: "20px"
+    marginLeft: "20px",
   },
   submitButton: {
     marginLeft: "10px",
-    marginTop: "10px"
-  }
+    marginTop: "10px",
+  },
 }));
 
 const DogForm = ({ handleSubmit, dogInfo }) => {
@@ -34,7 +34,7 @@ const DogForm = ({ handleSubmit, dogInfo }) => {
     sex: "sex" in dogInfo ? dogInfo.sex : "female",
     fixed: "fixed" in dogInfo ? dogInfo.fixed : false,
     weight: "weight" in dogInfo ? dogInfo.weight : 0,
-    owner: "owner" in dogInfo ? dogInfo.owner : ""
+    owner: "owner" in dogInfo ? dogInfo.owner : "",
   });
   const classes = useStyles();
 
