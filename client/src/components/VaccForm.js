@@ -35,9 +35,15 @@ export default function VaccForm({ handleSubmit, dogId }) {
       if (!vaccRecord.body) {
         return;
       } else {
-        setDhppDappDueDate(vaccRecord.body["dhppDappDueDate"] || null);
-        setRabiesDueDate(vaccRecord.body["rabiesDueDate"] || null);
-        setBordetellaDueDate(vaccRecord.body["bordetellaDueDate"] || null);
+        if (dhppDappDueDate == null) {
+          setDhppDappDueDate(vaccRecord.body["dhppDappDueDate"]);
+        }
+        if (rabiesDueDate == null) {
+          setRabiesDueDate(vaccRecord.body["rabiesDueDate"]);
+        }
+        if (bordetellaDueDate == null) {
+          setBordetellaDueDate(vaccRecord.body["bordetellaDueDate"]);
+        }
       }
     }
     fetchData();
