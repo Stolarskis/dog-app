@@ -7,19 +7,16 @@ import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
-    margin: theme.spacing(2),
-  },
-  absolute: {
-    position: "absolute",
+    position: "fixed",
     bottom: theme.spacing(2),
-    right: theme.spacing(3),
+    right: theme.spacing(2),
   },
 }));
 
 const AddDogButton = () => {
   const classes = useStyles();
   return (
-    <Tooltip title="Add Dog" aria-label="add">
+    <Tooltip title="Add Dog" aria-label="add" className={classes.fab}>
       <Fab
         color="secondary"
         className={classes.absolute}
