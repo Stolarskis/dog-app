@@ -19,7 +19,7 @@ import DogMenu from "./DogMenu";
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 300,
-    maxWidth: 450,
+    maxWidth: 300,
   },
   media: {
     height: 0,
