@@ -33,7 +33,7 @@ app.post("/", async (req, res) => {
     sex: req.body.sex,
     fixed: req.body.fixed,
     weight: req.body.weight,
-    age: req.body.age,
+    ageYears: req.body.ageYears,
     owner: req.body.owner,
   });
   res.status(201).send({
@@ -68,7 +68,7 @@ app.put("/:id", async (req, res) => {
       sex: req.body.sex,
       fixed: req.body.fixed,
       weight: req.body.weight,
-      age: req.body.age,
+      ageYears: req.body.ageYears,
       owner: req.body.owner,
     },
     { where: { id: req.params.id } }
