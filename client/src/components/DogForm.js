@@ -34,6 +34,7 @@ const DogForm = ({ handleSubmit, dogInfo }) => {
     sex: "sex" in dogInfo ? dogInfo.sex : "female",
     fixed: "fixed" in dogInfo ? dogInfo.fixed : false,
     weight: "weight" in dogInfo ? dogInfo.weight : 0,
+    ageYears: "ageYears" in dogInfo ? dogInfo.ageYears : 0,
     owner: "owner" in dogInfo ? dogInfo.owner : "",
   });
   const classes = useStyles();
@@ -59,6 +60,10 @@ const DogForm = ({ handleSubmit, dogInfo }) => {
         break;
       case "weight":
         newDog["weight"] = event.target.value;
+        setDog(newDog);
+        break;
+      case "ageYears":
+        newDog["ageYears"] = event.target.value;
         setDog(newDog);
         break;
       case "owner":
@@ -130,6 +135,16 @@ const DogForm = ({ handleSubmit, dogInfo }) => {
             value={dog.weight}
           />
         </div>
+        <div>
+          <TextField
+            name="ageYears"
+            label="age in years"
+            variant="outlined"
+            onChange={handleChange}
+            value={dog.ageYears}
+          />
+        </div>
+
         <div>
           <TextField
             name="owner"
