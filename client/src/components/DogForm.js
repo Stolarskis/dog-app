@@ -9,21 +9,22 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import DogImageUpload from "./DogImageUpload";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
+    flexGrow: 1,
   },
-
-  radioButtons: {
-    marginLeft: "20px",
+  paper: {
+    height: 140,
+    width: 100,
   },
-  submitButton: {
-    marginLeft: "10px",
-    marginTop: "10px",
+  row: {
+    justify: "flex-start",
+  },
+  control: {
+    padding: theme.spacing(2),
   },
 }));
 
@@ -36,8 +37,21 @@ const DogForm = ({ handleSubmit, dogInfo }) => {
     weight: "weight" in dogInfo ? dogInfo.weight : 0,
     ageYears: "ageYears" in dogInfo ? dogInfo.ageYears : 0,
     owner: "owner" in dogInfo ? dogInfo.owner : "",
+    dogProfile: null,
   });
   const classes = useStyles();
+
+  function addDogProfileToState(file) {
+    let newDog = Object.assign({}, dog);
+    newDog["dogProfile"] = file;
+    setDog(newDog);
+  }
+
+  function removeDogProfileState() {
+    let newDog = Object.assign({}, dog);
+    newDog["dogProfile"] = null;
+    setDog(newDog);
+  }
 
   function handleChange(event) {
     let newDog = Object.assign({}, dog);
@@ -77,96 +91,138 @@ const DogForm = ({ handleSubmit, dogInfo }) => {
   }
 
   return (
-    <div>
-      <form className={classes.root} noValidate autoComplete="off">
-        <div>
-          <TextField
-            name="name"
-            label="Name"
-            variant="outlined"
-            onChange={handleChange}
-            value={dog.name}
-          />
-          <FormControl component="fieldset" className={classes.radioButtons}>
-            <FormLabel component="legend">Sex</FormLabel>
-            <RadioGroup
-              aria-label="Sex"
-              name="sex"
-              value={dog.sex}
+    <Grid container className={classes.root} spacing={2}>
+      {/* First Row - Name and Sex Input Fields*/}
+      <Grid item xs={12}>
+        <Grid container justify="flex-start" spacing={2}>
+          <Grid key={"nameFieldGrid"} item>
+            <TextField
+              name="name"
+              label="Name"
+              variant="outlined"
               onChange={handleChange}
-            >
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label="Female"
-              />
-              <FormControlLabel value="male" control={<Radio />} label="Male" />
-            </RadioGroup>
-          </FormControl>
-        </div>
-        <div>
-          <TextField
-            name="breed"
-            label="Breed"
-            variant="outlined"
-            onChange={handleChange}
-            value={dog.breed}
-          />
+              value={dog.name}
+            />
+          </Grid>
 
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={dog.fixed}
+          <Grid key={"sexButtonGroupGrid"} item>
+            <FormControl component="fieldset" className={classes.radioButtons}>
+              <FormLabel component="legend">Sex</FormLabel>
+              <RadioGroup
+                aria-label="Sex"
+                name="sex"
+                value={dog.sex}
                 onChange={handleChange}
-                name="fixed"
-                color="primary"
-                className={classes.radioButtons}
-              />
-            }
-            label="Fixed"
-          />
-        </div>
-        <div>
-          <TextField
-            name="weight"
-            label="Weight"
-            variant="outlined"
-            onChange={handleChange}
-            value={dog.weight}
-          />
-        </div>
-        <div>
-          <TextField
-            name="ageYears"
-            label="age in years"
-            variant="outlined"
-            onChange={handleChange}
-            value={dog.ageYears}
-          />
-        </div>
+              >
+                <FormControlLabel
+                  value="female"
+                  control={<Radio />}
+                  label="Female"
+                />
+                <FormControlLabel
+                  value="male"
+                  control={<Radio />}
+                  label="Male"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Grid>
+        </Grid>
+      </Grid>
 
-        <div>
-          <TextField
-            name="owner"
-            label="Owner Name"
-            variant="outlined"
-            onChange={handleChange}
-            value={dog.owner}
-          />
-        </div>
-      </form>
+      <Grid item xs={12}>
+        <Grid container justify="flex-start" spacing={4}>
+          <Grid key={"nameFieldGrid"} item>
+            <TextField
+              name="breed"
+              label="Breed"
+              variant="outlined"
+              onChange={handleChange}
+              value={dog.breed}
+            />
+          </Grid>
+          <Grid key={"fixedCheckBoxGrid"} item>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={dog.fixed}
+                  onChange={handleChange}
+                  name="fixed"
+                  color="primary"
+                  className={classes.radioButtons}
+                />
+              }
+              label="Fixed"
+            />
+          </Grid>
+        </Grid>
+      </Grid>
 
-      <Button
-        className={classes.submitButton}
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          handleSubmit(dog);
-        }}
-      >
-        Submit
-      </Button>
-    </div>
+      <Grid item xs={12}>
+        <Grid container justify="flex-start" spacing={2}>
+          <Grid key={"weightFieldGrid"} item>
+            <TextField
+              name="weight"
+              label="Weight"
+              variant="outlined"
+              onChange={handleChange}
+              value={dog.weight}
+            />
+          </Grid>
+          <Grid key={"DogPictureUpload"} item>
+            <DogImageUpload
+              addDogProfile={addDogProfileToState}
+              removeDogProfile={removeDogProfileState}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Grid container justify="flex-start" spacing={2}>
+          <Grid key={"ageFieldGrid"} item>
+            <TextField
+              name="ageYears"
+              label="age in years"
+              variant="outlined"
+              onChange={handleChange}
+              value={dog.ageYears}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Grid container justify="flex-start" spacing={2}>
+          <Grid key={"ownerFieldGrid"} item>
+            <TextField
+              name="owner"
+              label="Owner Name"
+              variant="outlined"
+              onChange={handleChange}
+              value={dog.owner}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
+        <Grid container justify="flex-start" spacing={2}>
+          <Grid key={"submitButtonGrid"} item>
+            <Button
+              className={classes.submitButton}
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                handleSubmit(dog);
+              }}
+            >
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 

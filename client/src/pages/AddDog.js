@@ -34,6 +34,8 @@ const AddDog = () => {
       }
     );
 
+    //Upload Dog Image to Somewhere
+
     //Route back to home page
     history.push("/");
 
