@@ -1,61 +1,91 @@
 import express from "express";
-import models from "../database/models";
+import models from "../../models";
+import DogService from "../../services/DogService";
 
-let app = express.Router();
+let route = express.Router();
+let dogService = new DogService();
 
 // Get all dogs
-app.get("/all", async (req, res) => {
-  const dogs = await models.Dogs.findAll();
+route.get("/all", async (_, res) => {
+  const dogs = await dogService.getAllDogs();
   res.status(200).send({
     body: dogs,
   });
 });
 
 // Get a single dog by id
-app.get("/:id", async (req, res) => {
-  const dog = await getDog(req.params.id);
-  if (dog === null) {
-    res.status(404).send({
-      message: "Dog not found",
-    });
+route.get("/:id", async (req, res) => {
+  const id = req.params.id;
+  if (id !== undefined || id !== parseInt(id, 10)) {
+    console.error("Invalid Param");
+    res.status(400).send({ message: "Invalid id given for dog" });
   } else {
-    res.status(200).send({
-      body: dog,
-    });
+    const dog = await dogService.getDog(req.params.id);
+    if (dog === null) {
+      res.status(404).send({
+        message: "Dog not found",
+      });
+    } else {
+      res.status(200).send({
+        body: dog,
+      });
+    }
   }
 });
 
 //Add Dog
-app.post("/", async (req, res) => {
-  const dog = await models.Dogs.create({
-    name: req.body.name,
-    breed: req.body.breed,
-    sex: req.body.sex,
-    fixed: req.body.fixed,
-    weight: req.body.weight,
-    age: req.body.age,
-    owner: req.body.owner,
-  });
-  res.status(201).send({
-    message: "Dog Added",
-    body: dog,
-  });
-});
-
-app.delete("/:id", async (req, res) => {
-  const result = await models.Dogs.destroy({ where: { id: req.params.id } });
-  if (result === 0) {
-    res.status(404).send({
-      message: "Dog not found",
-    });
+route.post("/", async (req, res) => {
+  if (req.body.name == undefined || req.body.owner == undefined) {
+    console.error("Invalid request. Missing required fields, name/owner");
+    res.status(400).send({ message: "Missing name or owner fields" });
   } else {
-    res.status(200).send({
-      message: "Dog deleted successfully",
-    });
+    const inputDog = {
+      name: req.body.name,
+      breed: req.body.breed,
+      sex: req.body.sex,
+      fixed: req.body.fixed,
+      weight: req.body.weight,
+      age: req.body.age,
+      owner: req.body.owner,
+    };
+
+    const dog = await dogService.addDog(inputDog);
+    if (dog === null) {
+      res.status(500).send({
+        message: "Failed to add dog to database",
+      });
+    } else {
+      res.status(201).send({
+        message: "Dog Added Successfully",
+        body: dog,
+      });
+    }
   }
 });
 
-app.put("/:id", async (req, res) => {
+route.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  if (id === null && id !== parseInt(id, 10)) {
+    console.error("Invalid id");
+    res.status(400).send({
+      message: "Invalid Id",
+    });
+  } else {
+    const result = await dogService.deleteDog(req.params.id);
+    console.log(result);
+    if (result === 0) {
+      res.status(404).send({
+        message: "Dog not found",
+      });
+    } else {
+      res.status(200).send({
+        message: "Dog deleted successfully",
+      });
+    }
+  }
+});
+
+route.put("/:id", async (req, res) => {
   const dog = await getDog(req.params.id);
   if (dog === null) {
     res.status(404).send({ message: "Dog does not exist" });
@@ -80,7 +110,7 @@ app.put("/:id", async (req, res) => {
   }
 });
 
-app.get("/:id/vaccRecord", async (req, res) => {
+route.get("/:id/vaccRecord", async (req, res) => {
   const vaccRecord = await getVaccRecord(req.params.id);
   if (vaccRecord === null) {
     res.status(404).send({
@@ -93,7 +123,7 @@ app.get("/:id/vaccRecord", async (req, res) => {
   }
 });
 
-app.get("/:id/vaccRecord", async (req, res) => {
+route.get("/:id/vaccRecord", async (req, res) => {
   const dog = await getDog(req.params.id);
   if (dog === null) {
     res.status(404).send({
@@ -106,7 +136,7 @@ app.get("/:id/vaccRecord", async (req, res) => {
   }
 });
 
-app.post("/:id/vaccRecord", async (req, res) => {
+route.post("/:id/vaccRecord", async (req, res) => {
   //Check is given id exists for a dog in database
   const dog = await getDog(req.params.id);
   if (dog === null) {
@@ -134,7 +164,7 @@ app.post("/:id/vaccRecord", async (req, res) => {
   });
 });
 
-app.put("/:id/vaccRecord", async (req, res) => {
+route.put("/:id/vaccRecord", async (req, res) => {
   const dog = await getDog(req.params.id);
   if (dog === null) {
     res.status(404).send({
@@ -172,4 +202,4 @@ function getVaccRecord(id) {
   return models.VaccRecord.findOne({ where: { DogId: id } });
 }
 
-module.exports = app;
+module.exports = route;

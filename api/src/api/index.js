@@ -1,4 +1,4 @@
-import dog from "./dog";
+import dog from "./routes/dog";
 import express from "express";
 
 const router = express.Router();

@@ -2,9 +2,8 @@
   "name": "dog-app",
   "version": "0.0.1",
   "description": "App to keep track of vaccination records",
-  "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node ./api/index.js",
+    "dev": "nodemon --exec babel-node ./api/src/index.js",
     "prod": "./node_modules/.bin/babel api -d lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
